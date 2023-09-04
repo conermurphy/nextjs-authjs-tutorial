@@ -1,10 +1,13 @@
 import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 import { SignOut } from './components/AuthButtons';
-import { useAuthRedirect } from './utils/use-auth-redirect';
 
 export default async function Page() {
-  await useAuthRedirect();
   const session = await getServerSession();
+
+  if (!session) {
+    return <Link href="/auth/signin">Sign In</Link>;
+  }
 
   return (
     <>
